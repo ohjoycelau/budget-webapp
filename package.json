@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "css-loader": "^0.26.1",
+    "gh-pages": "^0.12.0",
     "node-sass": "^4.1.1",
     "path": "^0.12.7",
     "react-scripts": "0.8.4",
@@ -25,10 +26,12 @@
     "build-css": "node-sass src/stylesheets/sass/main.sass src/stylesheets/css/main.css",
     "watch-css": "node-sass src/stylesheets/sass/main.sass src/stylesheets/css/main.css -w",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy" : "npm run build&&gh-pages -d build"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "https://ohjoycelau.github.io/budget-webapp/"
 }

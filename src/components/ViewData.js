@@ -99,6 +99,7 @@ class ViewData extends Component {
 						className="callback--menu">
 						Menu
 					</button>
+					<a href="https://github.com/ohjoycelau/budget-webapp" target="blank"><button>Github</button></a>
 				</header>
 				<main>
 					<div className="header">
