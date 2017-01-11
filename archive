@@ -1,0 +1,145 @@
+import React, { Component } from 'react';
+
+// Firebase Setup
+import * as firebase from 'firebase';
+const config = {
+	apiKey: 'AIzaSyC-QwoD2shSio25oBHtMspw1ZeWl9Z_Ba8',
+	authDomain: 'budget-15789.firebaseapp.com',
+	databaseURL: 'https://budget-15789.firebaseio.com',
+	storageBucket: 'budget-15789.appspot.com',
+	messagingSenderId: '938874170950',
+};
+const budgetTracker = firebase.initializeApp(config, 'budgetTracker');
+
+
+// Firebase Auth
+function redirectLogin() {
+	let provider = new firebase.auth.GoogleAuthProvider();
+    budgetTracker.auth().signInWithRedirect(provider);
+}
+function logOut(currentUser) {
+	console.log('LOGOUT', currentUser);
+	if (currentUser !== null) {
+		budgetTracker.auth().signOut().then(function() {
+			currentUser = null;
+		}, function(error) {
+			alert('error signing out');
+		});
+	}
+}
+function checkSession(currentUser) {
+	if (!currentUser) {
+		redirectLogin();
+	} else {
+		logOut();
+	}
+}
+
+
+
+// function getData(currentUser) {
+// 	// console.log('CURRENTUSER', currentUser);
+
+// 	const userId = currentUser.uid;
+// 	// console.log(userId);
+// 	const dbObj = budgetTracker.database().ref().child(userId);
+
+// 	dbObj.on('value', snap => {
+// 		document.getElementById('json').innerText = JSON.stringify(snap.val(), null, 2);
+// 		let json = JSON.stringify(snap.val(), null, 2);
+
+// 		let data = snap.val().profile;
+// 		return data;
+// 	});
+
+// 	dbObj.child('profile').on('child_added', snap => {
+// 		const li = document.createElement('li');
+// 		li.innerText = snap.val();
+// 		li.id = snap.key;
+// 		document.getElementById('list').appendChild(li);
+// 	});
+// 	dbObj.child('profile').on('child_changed', snap => {
+// 		const liChanged = document.getElementById(snap.key);
+// 		liChanged.innerText = snap.val();
+// 	});
+// 	dbObj.child('profile').on('child_removed', snap => {
+// 		const liRemove = document.getElementById(snap.key);
+// 		liRemove.innerText = snap.val();
+// 	});
+// }
+
+
+
+// Import components
+import Settings from './components/Settings';
+import Header from './components/Header';
+import DataDisplay from './components/DataDisplay';
+import Footer from './components/Footer';
+// Render components
+class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			currentUser: null,
+			uid: null,
+			data: null,
+		};
+	}
+
+	componentDidMount() {
+		budgetTracker.auth().onAuthStateChanged((user) => {
+			if (user !== null ) {
+				const currentUser = user;
+				const database = budgetTracker.database().ref().child(user.uid);
+				database.on('value', snapshot => {
+					// console.log('snapshot', snapshot.val());
+					this.setState({
+						currentUser: user,
+						uid: user.uid,
+						data: snapshot.val(),
+					});
+				});
+			} else {
+				// console.log('no current user');
+				this.setState({
+					currentUser: null,
+					uid: null,
+					data: null,
+				});
+			}
+		});
+	}
+
+	render() {
+		const {currentUser, uid, data} = this.state;
+		// console.log(currentUser);
+		if (currentUser === null) {
+		}
+
+		return (
+			<div
+				className={
+					currentUser ? null : 'anonymous'
+				}
+			>
+				<Settings
+					checkSession={checkSession}
+					currentUser={currentUser}
+				/>
+				<Header
+					checkSession={checkSession}
+					currentUser={currentUser}
+					openOverlay={this.openOverlay}
+				/>
+				<DataDisplay
+					currentUser={currentUser}
+					uid={uid}
+					data={data}
+				/>
+				<Footer />
+			</div>
+		);
+	}
+}
+
+export default App;

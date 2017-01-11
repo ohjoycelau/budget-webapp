@@ -1,0 +1,20 @@
+// Mixins
+
+// Gradients
+@mixin gradient($direction, $first, $second)
+	background-color: $first // Old browsers
+	background: linear-gradient($direction , $first, $second)
+	background: -o-linear-gradient($direction , $first, $second)
+	background: -ms-linear-gradient($direction , $first, $second)
+	background: -moz-linear-gradient($direction , $first, $second)
+	background: -webkit-linear-gradient($direction , $first, $second)
+
+// Typography
+@mixin fontPrimary
+	color: $color-white
+	font-family: $font-primary
+	-webkit-font-smoothing: antialiased
+	-moz-osx-font-smoothing: grayscale
+	text-rendering: optimizeLegibility
+	font-kerning: auto
+

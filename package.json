@@ -1,0 +1,34 @@
+{
+  "name": "budget-firebase",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "css-loader": "^0.26.1",
+    "node-sass": "^4.1.1",
+    "path": "^0.12.7",
+    "react-scripts": "0.8.4",
+    "sass-loader": "^4.1.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.14.0"
+  },
+  "dependencies": {
+    "firebase": "^3.6.4",
+    "firebaseui": "^1.0.0",
+    "path": "^0.12.7",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-router": "^3.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build-css": "node-sass src/stylesheets/sass/main.sass src/stylesheets/css/main.css",
+    "watch-css": "node-sass src/stylesheets/sass/main.sass src/stylesheets/css/main.css -w",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
+}

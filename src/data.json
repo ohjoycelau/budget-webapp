@@ -1,0 +1,20 @@
+{
+	"data": [
+		{
+			"date" : 161201,
+			"description" : "lorem ipsum",
+			"category" : "category",
+			"value" : 11.21
+		}, {
+			"date" : 161301,
+			"description" : "two",
+			"category" : "",
+			"value" : 12.32
+		}, {
+			"date" : 160923,
+			"description" : "three",
+			"category" : "three",
+			"value" : 124.23
+		}
+	]
+}

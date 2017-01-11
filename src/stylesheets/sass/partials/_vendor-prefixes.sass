@@ -1,0 +1,44 @@
+// Flex
+@mixin flex($justify, $align, $direction: row, $wrap: wrap)
+	display: flex
+	justify-content: $justify
+	align-items: $align
+	flex-direction: $direction
+	flex-wrap: $wrap
+
+@mixin boxSizing($property)
+	box-sizing: $property
+	-moz-box-sizing: $property
+	-webkit-box-sizing: $property
+
+@mixin transform($property)
+	transform: $property
+	-ms-transform: $property
+	-moz-transform: $property
+	-webkit-transform: $property
+
+@mixin transition($property)
+	transition: $property
+	-o-transition: $property
+	-moz-transition: $property
+	-webkit-transition: $property
+
+@mixin boxShadow($property)
+	box-shadow: $property
+	-moz-box-shadow: $property
+	-webkit-box-shadow: $property
+
+
+// Square
+@mixin square
+	display: block
+	position: relative
+	&:after
+		content: ""
+		display: block
+		padding-bottom: 100%
+
+@mixin square__content
+	position: absolute
+	width: 100%
+	height: 100%
