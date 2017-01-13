@@ -10,14 +10,17 @@ class Filter extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			todayObj: [],
 			thisMonth: 'Month',
 		}
 	}
 	componentWillMount() {
+		let mm = (new Date()).getUTCMonth();
+		this.setState({
+			thisMonth: months[mm],
+		});
 	}
 	render() {
-		const {todayObj, thisMonth} = this.state;
+		const {thisMonth} = this.state;
 		const {onFilterChange} = this.props;
 		return (
 			<div>

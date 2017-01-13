@@ -5,12 +5,19 @@ import Expense from './Expense';
 class Expenses extends Component {
 	static propTypes = {
 		expenses: PropTypes.array,
+		monthGroup: PropTypes.array,
 	}
 	render() {
-		const expenses = this.props.expenses;
+		const {expenses, monthGroup} = this.props;
+		let print = expenses;
+		if (monthGroup) {
+			print = 'woot';
+			// console.log(monthGroup);
+		}
+
 		return (
 			<ul className="expenses--list">
-				{expenses}
+				{print}
 			</ul>
 		);
 	}

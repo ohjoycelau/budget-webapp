@@ -14,47 +14,58 @@ class ViewData extends Component {
 		this.state = {
 			filter: 'month',
 			today: {
-				yy: (new Date()).getUTCFullYear(),
-				mm: (new Date()).getUTCMonth() + 1,
-				dd: (new Date()).getUTCDay(),
-			}
+				yy: (new Date()).getFullYear(),
+				mm: (new Date()).getMonth(),
+				dd: (new Date()).getDate(),
+			},
+			monthGroup: null,
 		}
 	}
 	static propTypes = {
 		data: PropTypes.array,
 	}
 	onFilterChange(filter) {
-		if (filter === 'today') {
-			this.setState({
-				filter,
+		const {data} = this.props;
+		this.setState({
+			filter,
+		});
+		if (filter == 'overview') {
+			let monthGroup = [];
+			monthGroup = data.map((item) => {
+				let yy = item.date.getUTCFullYear();
+				let mm = item.date.getUTCMonth();
+				if (monthGroup.length > 0) {
+					if (monthGroup.indexOf(yy) === -1){
+						monthGroup.push(yy);
+					}
+					this.setState({
+						monthGroup,
+					});
+				} else {
+					monthGroup.push(yy);
+				}
 			});
-		} else if (filter === 'month') {
+		} else {
 			this.setState({
-				filter,
-			});
-		} else if (filter === 'overview') {
-			this.setState({
-				filter,
+				monthGroup: null,
 			});
 		}
 	}
 	render() {
-		const items = this.props.data;
-		const {filter, today} = this.state;
-		// console.log(today);
-
+		const {data} = this.props;
+		const {filter, today, monthGroup} = this.state;
 		let expenses,
-			printTotal;
-		let total = 0;
-		if (items) {
-			expenses = items.map((item) => {
+			printTotal,
+			total = 0;
+
+		if (data) {
+			expenses = data.map((item) => {
 				item.date = new Date(item.date);
 				return (item);
 			}).filter(({date}) => {
 				let yy = date.getUTCFullYear(),
-					mm = date.getUTCMonth() + 1,
-					dd = date.getUTCDay();
-				
+					mm = date.getUTCMonth(),
+					dd = date.getUTCDate();
 				if (filter == 'today') {
 					// Return if today matches exactly
 					return(yy === today.yy && mm === today.mm && dd === today.dd );
@@ -62,31 +73,23 @@ class ViewData extends Component {
 					// Return if month matches today
 					return(yy === today.yy && mm === today.mm);
 				} else if (filter == 'overview') {
-					return dd;
+					// Return all
+					return(dd);
 				}
 			}).sort((a, b) =>
 				a.date > b.date ? -1 : b.date > a.date ? 1 : 0
 			).map((item, index) => {
-				if (filter == 'today' || filter == 'month') {
-					total += item.value;
-					total = Math.round(total*100)/100;
-					printTotal = (
-						<Total total={total} />
-					);
-					return (
-						<Expense
-							key={index}
-							item={item}
-						/>
-					);
-				} else {
-					return (
-						<Expense
-							key={index}
-							item={item}
-						/>
-					);
-				}
+				total += item.value;
+				total = Math.round(total*100)/100;
+				printTotal = (
+					<Total total={total} />
+				);
+				return (
+					<Expense
+						key={index}
+						item={item}
+					/>
+				);
 			});
 		}
 		return (
@@ -107,7 +110,9 @@ class ViewData extends Component {
 						{printTotal}
 					</div>
 					<div className="expenses">
-						<Expenses expenses={expenses} />
+						<Expenses
+							expenses={expenses}
+							monthGroup={monthGroup} />
 					</div>
 				</main>
 				<footer>

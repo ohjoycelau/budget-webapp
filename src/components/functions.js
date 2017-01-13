@@ -1,6 +1,8 @@
 function formatValue(x) {
+	// if (x.toString().indexOf('.') > -1) {
 	x = parseFloat(Math.round(x * 100) / 100).toFixed(2);
 	x = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	// }
 	return x;
 }
 

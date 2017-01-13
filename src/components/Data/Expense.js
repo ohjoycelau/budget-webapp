@@ -6,7 +6,9 @@ class Expense extends Component {
 	render() {
 		const {item} = this.props;
 		let date = item.date;
-		let day = ('0' + date.getUTCDate()).slice(-2);
+		// console.log('EXPENSE', item.date);
+		let day = ('0' + date.getUTCDate() ).slice(-2);
+		// day = day - 1;
 
 		let description = item.description;
 		let category = item.category;
