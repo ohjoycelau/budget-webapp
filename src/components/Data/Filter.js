@@ -23,7 +23,7 @@ class Filter extends Component {
 		const {thisMonth} = this.state;
 		const {onFilterChange} = this.props;
 		return (
-			<div>
+			<div className="filter">
 				<button
 					onClick={() => onFilterChange('today')}>
 					Today

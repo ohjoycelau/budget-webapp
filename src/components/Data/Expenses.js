@@ -12,7 +12,7 @@ class Expenses extends Component {
 		let print = expenses;
 		if (monthGroup) {
 			print = 'woot';
-			// console.log(monthGroup);
+			console.log(monthGroup);
 		}
 
 		return (
