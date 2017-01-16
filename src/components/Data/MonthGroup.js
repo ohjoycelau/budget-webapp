@@ -12,6 +12,7 @@ class MonthGroup extends Component {
 		return(
 			<div>
 				<hr/>
+				<h1>Month</h1>
 				<div>{monthGroup}</div>
 			</div>
 		);

@@ -51,11 +51,21 @@ class Expenses extends Component {
 			}
 
 			console.log(group);
+			for (let g = 0; g < group.length; g++){
+				console.log(group[g]);
+			}
+
+			print = group.map((month, index) => {
+				return(
+					<MonthGroup key={index} monthGroup={month} />
+				);
+			})
 
 			return (
 				<ul className="expenses--list">
 					<h1>Month Groups</h1>
-					<MonthGroup monthGroup={group} />
+					{print}
+					<hr/>
 				</ul>
 			)
 
