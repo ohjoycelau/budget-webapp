@@ -133,6 +133,9 @@ footer {
   .total--label {
     line-height: 3em; }
 
+.monthGroup {
+  border: 1px solid red; }
+
 .expenses {
   padding: 2em 0; }
   .expenses--list {

@@ -55,42 +55,39 @@ class ViewData extends Component {
 		const {data} = this.props;
 		const {filter, today, monthGroup} = this.state;
 		let expenses,
-			printTotal,
+			printTotal = <Total total={0} />,
+			// printTotal,
 			total = 0;
 
 		if (data) {
-			expenses = data.map((item) => {
-				item.date = new Date(item.date);
-				return (item);
-			}).filter(({date}) => {
-				let yy = date.getUTCFullYear(),
-					mm = date.getUTCMonth(),
-					dd = date.getUTCDate();
-				if (filter == 'today') {
-					// Return if today matches exactly
-					return(yy === today.yy && mm === today.mm && dd === today.dd );
-				} else if (filter == 'month') {
-					// Return if month matches today
-					return(yy === today.yy && mm === today.mm);
-				} else if (filter == 'overview') {
-					// Return all
-					return(dd);
-				}
-			}).sort((a, b) =>
-				a.date > b.date ? -1 : b.date > a.date ? 1 : 0
-			).map((item, index) => {
-				total += item.value;
-				total = Math.round(total*100)/100;
-				printTotal = (
-					<Total total={total} />
-				);
-				return (
-					<Expense
-						key={index}
-						item={item}
-					/>
-				);
-			});
+			if (filter == 'today' || filter == 'month' ) {
+				expenses = data.map((item) => {
+					item.date = new Date(item.date);
+					return (item);
+				}).filter(({date}) => {
+					let yy = date.getUTCFullYear(),
+						mm = date.getUTCMonth(),
+						dd = date.getUTCDate();
+					if (filter == 'today') {
+						// Return if today matches exactly
+						return(yy === today.yy && mm === today.mm && dd === today.dd );
+					} else if (filter == 'month') {
+						// Return if month matches today
+						return(yy === today.yy && mm === today.mm);
+					}
+				}).sort((a, b) =>
+					a.date > b.date ? -1 : b.date > a.date ? 1 : 0
+				).map((item, index) => {
+					total += item.value;
+					total = Math.round(total*100)/100;
+					printTotal = (
+						<Total total={total} />
+					);
+					return <Expense key={index} item={item} />
+				});
+			} else {
+				expenses = data;
+			}
 		}
 		return (
 			<div
