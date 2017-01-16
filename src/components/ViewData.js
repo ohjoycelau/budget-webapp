@@ -26,30 +26,30 @@ class ViewData extends Component {
 	}
 	onFilterChange(filter) {
 		const {data} = this.props;
-		this.setState({
-			filter,
-		});
-		if (filter == 'overview') {
-			let monthGroup = [];
-			monthGroup = data.map((item) => {
-				let yy = item.date.getUTCFullYear();
-				let mm = item.date.getUTCMonth();
-				if (monthGroup.length > 0) {
-					if (monthGroup.indexOf(yy) === -1){
-						monthGroup.push(yy);
-					}
-					this.setState({
-						monthGroup,
-					});
-				} else {
-					monthGroup.push(yy);
-				}
-			});
-		} else {
-			this.setState({
-				monthGroup: null,
-			});
-		}
+		// this.setState({
+		// 	filter,
+		// });
+		// if (filter == 'overview') {
+		// 	let monthGroup = [];
+		// 	monthGroup = data.map((item) => {
+		// 		let yy = item.date.getUTCFullYear();
+		// 		let mm = item.date.getUTCMonth();
+		// 		if (monthGroup.length > 0) {
+		// 			if (monthGroup.indexOf(yy) === -1){
+		// 				monthGroup.push(yy);
+		// 			}
+		// 			this.setState({
+		// 				monthGroup,
+		// 			});
+		// 		} else {
+		// 			monthGroup.push(yy);
+		// 		}
+		// 	});
+		// } else {
+		// 	this.setState({
+		// 		monthGroup: null,
+		// 	});
+		// }
 	}
 	render() {
 		const {data} = this.props;
