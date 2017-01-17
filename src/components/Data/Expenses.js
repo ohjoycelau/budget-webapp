@@ -10,13 +10,14 @@ class Expenses extends Component {
 	}
 	render() {
 		const {expenses, monthGroup} = this.props;
-		let print = expenses;
+		let printGroup = expenses;
 
 		if (monthGroup && expenses) {
-			print = [];
-			let group = [],
+			printGroup = [];
+			let groups = [],
 				groupY = [],
-				groupM = [];
+				groupM = [],
+				monthTotal = 0;
 			let years = monthGroup.sort((a, b) => a > b ? -1 : b > a ? 1 : 0 );
 
 			for ( let y = 0; y < years.length; y++) {
@@ -32,39 +33,58 @@ class Expenses extends Component {
 
 				for (let m = 0; m < 12; m++) {
 					groupM[m] = groupY[year].filter((item, index) => {
-						// console.log('group[m]', groupY[year][index].date);
+						// console.log('groups[m]', groupY[year][index].date);
 						let mm = item.date.getUTCMonth();
 						if (m == mm){
 							return item;
 						}
-					}).map((item, index) => {
-						return <Expense key={index} item={item} />
-					});
-
+					})
+					// .map((item, index) => {
+					// 	return <Expense key={index} item={item} />
+					// });
 					// console.log('groupM', m, groupM[m]);
 					// console.log(groupM[m].length);
+
 					if (groupM[m].length > 0) {
-						group.push(groupM[m]);
+						groups.push(groupM[m]);
 					}
 				}
 
 			}
 
-			console.log(group);
 
-			print = group.map((month, index) => {
+			printGroup = groups.map((group, index) => {
+				// let value;
+				let month = group[0].date.getUTCMonth(),
+					year = group[0].date.getUTCFullYear();
+				// let value = group;
+				// console.log(index, group);
+				// monthTotal = monthTotal + value;
+				group.map((item, index) => {
+					monthTotal += item.value;
+				});
 				return(
-					<MonthGroup key={index} monthGroup={month} />
+					<MonthGroup
+						key={index}
+						mm={month}
+						yy={year}
+						monthTotal={monthTotal}
+						monthGroup={group} />
 				);
-			})
-
+			});
 		}
-
 		return (
+			// Expenses
+				// MonthGroup
+					// expand/collapse Expense Block controls
+					// ExpenseBlock
+				// ExpenseBlock
 			<ul className="expenses--list">
-				{print}
+				{printGroup}
 			</ul>
 		);
+	
+
 
 
 	}

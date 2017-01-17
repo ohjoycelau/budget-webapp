@@ -4,7 +4,7 @@ import Filter from './Data/Filter';
 import Total from './Data/Total';
 import Expenses from './Data/Expenses';
 import Expense from './Data/Expense';
-import {SwitchView} from './functions.js';
+import {formatValue, SwitchView} from './functions.js';
 
 // Render
 class ViewData extends Component {
@@ -79,7 +79,8 @@ class ViewData extends Component {
 					a.date > b.date ? -1 : b.date > a.date ? 1 : 0
 				).map((item, index) => {
 					total += item.value;
-					total = Math.round(total*100)/100;
+					// total = Math.round(total*100)/100;
+					// total = formatValue(total);
 					printTotal = (
 						<Total total={total} />
 					);
